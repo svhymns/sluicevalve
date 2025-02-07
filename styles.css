@@ -10,6 +10,92 @@ body, html {
   font-family: Helvetica, sans-serif;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Mobile Styles - For devices with a screen width of 600px or less */
+@media only screen and (max-width: 600px) {
+  body {
+      font-size: 14px; /* Adjust text size for smaller screens */
+  }
+
+  .container {
+      width: 95%; /* Make the container slightly larger on mobile */
+  }
+
+  header {
+      padding: 10px 0;
+  }
+
+  nav {
+      font-size: 16px;
+      display: block; /* Stack navigation items vertically */
+  }
+
+  .main-content {
+      padding: 20px;
+  }
+
+  .card {
+      width: 100%; /* Full width for cards */
+      margin-bottom: 15px;
+  }
+}
+
+/* Tablet Styles - For devices with a screen width between 601px and 1024px */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  body {
+      font-size: 16px; /* Adjust text size for tablets */
+  }
+
+  .container {
+      width: 95%; /* Wider container than mobile */
+  }
+
+  .main-content {
+      padding: 30px;
+  }
+
+  .card {
+      width: 48%; /* Two cards per row on tablet */
+      margin: 10px;
+  }
+}
+
+/* Desktop Styles - For devices with a screen width of 1025px or more */
+@media only screen and (min-width: 1025px) {
+  body {
+      font-size: 18px; /* Default text size for desktops */
+  }
+
+  .container {
+      width: 80%; /* Set container width for larger screens */
+  }
+
+  .main-content {
+      padding: 40px;
+  }
+
+  .card {
+      width: 30%; /* Three cards per row on desktop */
+      margin: 15px;
+  }
+
+  nav {
+      display: flex; /* Horizontal navigation on larger screens */
+      justify-content: space-around;
+  }
+}
+
 /* Parallax background */
 .parallax-container {
   position: relative;
@@ -200,3 +286,4 @@ body, html {
 .small-links a:hover {
   text-decoration: underline;
 }
+
