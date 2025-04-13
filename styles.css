@@ -199,10 +199,15 @@ body::before {
 @media (max-width: 768px) {
 
   .logo {
-    margin-top: 0px;
-    margin-bottom: -39px; /* Move the logo up by 20 pixels */
-    transform: scale(1.8); /* 80% bigger */
+    position: absolute; /* Ensure the logo can be positioned */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    max-width: 200px; /* Adjust the size for mobile */
+    width: 100%; /* Ensure it scales proportionally */
+    height: auto; /* Maintain aspect ratio */
   }
+
 
   .scrolling-text {
     animation: scroll 20s linear infinite;
