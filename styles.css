@@ -1,0 +1,284 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center elements vertically */
+  align-items: center; /* Center elements horizontally */
+  overflow-y: scroll; /* Enable scrolling */
+  text-align: center; /* Center text */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+
+/* Background Image */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('C:/Users/Samsung Galaxy/Documents/sluicevalve-main/images/one shot cover.png') no-repeat center center;
+  background-size: contain; /* Ensure the image scales proportionally */
+  background-position: calc(50% - 50px) center; /* Move the background 50px to the left */
+  z-index: -1; /* Place it behind all content */
+}
+
+/* Scrolling Text Bar */
+.scrolling-text-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1; /* Ensure it stays above other content */
+}
+
+.scrolling-text {
+  display: inline-block;
+  animation: scroll 30s linear infinite; /* Smooth scrolling */
+  padding: px;
+  font-size: 1rem;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Logo */
+.logo {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0px;
+}
+
+/* Slideshow Container */
+.slideshow-container {
+  position: relative;
+  width: 50%; /* Use percentage width for responsiveness */
+  max-width: 100px; /* Maximum width for larger screens */
+  aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+  perspective: 4000px; /* Add perspective for 3D effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -50px auto; /* Center horizontally and add spacing above and below */
+}
+
+/* Slideshow */
+.slideshow {
+  position: relative;
+  width: 70%; /* Match the size of the container */
+  height: 140%; /* Match the size of the container */
+  transform-style: preserve-3d; /* Enable 3D transformations */
+  animation: rotateSlideshow 5s infinite linear; /* Rotate continuously */
+  transition: animation 0.5s ease-in-out; /* Smooth transition for animation changes */
+}
+
+/* Hover Interaction */
+.slideshow:hover {
+  animation-play-state: paused; /* Pause the animation completely on hover */
+}
+
+/* Slideshow Items */
+.slideshow-item {
+  position: absolute;
+  width: 100%; /* Match the size of the slideshow container */
+  height: 140%; /* Match the size of the slideshow container */
+  backface-visibility: hidden; /* Hide the back face when not visible */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Map and Image */
+.slideshow-item img,
+.slideshow-item #map {
+  width: 100%; /* Match the size of the slideshow item */
+  height: 100%; /* Match the size of the slideshow item */
+  object-fit: cover; /* Ensure the content scales proportionally */
+  display: block; /* Ensure no inline spacing issues */
+}
+
+/* Front Side */
+.front {
+  transform: rotateY(0deg); /* Front side */
+}
+
+/* Back Side */
+.back {
+  transform: rotateY(180deg); /* Back side */
+}
+
+@keyframes rotateSlideshow {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) {
+  .slideshow-container {
+    width: 320px; /* Fixed width for mobile */
+    height: 180px; /* Fixed height to maintain 16:9 aspect ratio */
+    margin: 10px auto; /* Adjust spacing below the logo */
+  }
+
+  .slideshow-item img,
+  .slideshow-item #map {
+    width: 100%; /* Match the size of the slideshow item */
+    height: 100%; /* Match the size of the slideshow item */
+    object-fit: cover; /* Ensure the content scales proportionally */
+  }
+}
+
+/* Text Containers */
+.text-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.left-text,
+.right-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  gap: 20px; /* Add spacing between buttons */
+  margin: 20px 0; /* Add spacing above and below */
+}
+
+.button {
+  background-color: rgb(38, 0, 255);
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  opacity: 0.6;
+  font-size: 16px;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+/* Signup Container */
+.signup-container {
+  text-align: center;
+  margin: 20px 0; /* Add spacing above and below */
+}
+
+/* Small Website Links */
+.small-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* Last Line of Text */
+.last-line {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) {
+  .logo {
+    max-width: 550px; /* Scale down the logo */
+    width: 80%;
+    height: auto;
+    margin-top: 0px;
+  }
+
+  .scrolling-text {
+    animation: scroll 20s linear infinite; /* Keep the same animation duration */
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(-120%); /* Start further to the right */
+    }
+    to {
+      transform: translateX(-100%); /* Move fully off-screen to the left */
+    }
+  }
+
+  body::before {
+    background-size:119%; /* Adjust background size for mobile */
+  }
+
+  .slideshow-container {
+    width: 50%; /* Keep it 50% smaller on mobile */
+    max-width: 160px; /* Scale down further for mobile (50% of 320px) */
+    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+    margin: 0px auto; /* Adjust spacing below the logo */
+  }
+
+  .slideshow-item {
+    width: 100%; /* Match the size of the slideshow container */
+    height: 80%; /* Match the size of the slideshow container */
+  }
+
+  .slideshow-item img,
+  .slideshow-item #map {
+    width: 100%; /* Match the size of the slideshow item */
+    height: 100%; /* Match the size of the slideshow item */
+    object-fit: cover; /* Ensure the content scales proportionally */
+    display: block; /* Ensure no inline spacing issues */
+  }
+
+  .button {
+    font-size: 0.8rem; /* Smaller font size for mobile */
+    padding: 5px 10px; /* Adjust padding for smaller screens */
+  }
+
+  .small-links {
+    gap: 5px;
+    margin: 15px auto;
+  }
+
+  .last-line {
+    font-size: 0.8rem;
+    margin: 15px auto;
+  }
+}

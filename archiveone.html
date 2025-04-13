@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>//archiveone</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, sans-serif;
+      background-color: #d3d3d3; /* Grey background */
+      text-align: center;
+      padding: 50px;
+      overflow: hidden; /* Prevent scrollbars */
+    }
+
+    .dot-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .dot {
+      position: absolute;
+      width: 30px;  /* Circle diameter */
+      height: 30px; /* Circle diameter */
+      background-color: yellow;
+      border-radius: 50%; /* Makes the dot a circle */
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* Styling for the image inside the dot */
+    .dot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Password modal styles */
+    .password-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .password-modal-content {
+      background-color: white;
+      padding: 20px;
+      text-align: center;
+      width: 300px;
+      font-family: Helvetica, sans-serif;
+      border-radius: 0; /* Square corners for the modal */
+    }
+
+    /* Updated input field font size */
+    .password-modal input {
+      padding: 15px;
+      font-size: 11.2px; /* 30% smaller than before */
+      margin-bottom: 10px;
+      width: 100%;
+      border-radius: 0; /* Straight edges */
+      border: 1px solid #ccc;
+      font-family: Helvetica, sans-serif;
+    }
+
+    /* Updated button font size */
+    .password-modal button {
+      padding: 10px;
+      font-size: 11.2px; /* 30% smaller than before */
+      background-color: darkblue;
+      color: white;
+      border: none;
+      border-radius: 0; /* Square edges */
+      cursor: pointer;
+      font-family: Helvetica, sans-serif;
+      width: 100%; /* Square button */
+    }
+
+    /* Button hover */
+    .password-modal button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Error message font size */
+    #error-message {
+      font-size: 9.8px; /* 30% smaller than before */
+      color: red;
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Container for the moving dots -->
+  <div class="dot-container" id="dot-container">
+    <!-- JavaScript will populate this with dots -->
+  </div>
+
+  <!-- Password modal -->
+  <div class="password-modal" id="password-modal">
+    <div class="password-modal-content">
+      <input type="password" id="password-input" placeholder="Enter password" />
+      <button onclick="checkPassword()">Submit</button>
+      <p id="error-message">Incorrect password. Try again.</p>
+    </div>
+  </div>
+
+  <script>
+    // Define an array with the details for each dot
+    const dotInfo = [
+      {
+        image: 'C:/Users/Samsung Galaxy/Documents/sluicevalve-main/images/teeth rot.png', // Replace with the image URL
+        password: 'rot', // Replace with the password for this dot
+        link: 'https://soundcloud.com/valvebouquets/standwimme?si=2fb16c85946049dabe67b2ec8f388679&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', // Replace with the link for this dot
+      },
+      {
+        image: 'C:/Users/Samsung Galaxy/Documents/sluicevalve-main/images/317f59640f4f7b404f1efe40b9493b97.jpg', // Replace with the image URL
+        password: 'lotteryticket', // Replace with the password for this dot
+        link: 'svhymnsarchive0.02.html', // Replace with the link for this dot
+      },
+    {
+        image: 'C:/Users/Samsung Galaxy/Documents/sluicevalve-main/images/dopefuq.png', // Replace with the image URL
+        password: 'dopefuq', // Replace with the password for this dot
+        link: 'https://www.youtube.com/watch?v=1b6W0EInywc', // Replace with the link for this dot
+      },
+      // Add more dots with similar structure as needed
+    ];
+
+    // Function to create and position the dots
+    function createRandomDots() {
+      const container = document.getElementById('dot-container');
+      const totalDots = dotInfo.length; // Number of dots defined in dotInfo
+
+      const dotSpeedRange = 2; // Speed range for each dot
+
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+
+        // Random initial position
+        const initialX = Math.random() * window.innerWidth;
+        const initialY = Math.random() * window.innerHeight;
+
+        // Random direction (either +1 or -1 for each axis)
+        const directionX = Math.random() > 0.5 ? 1 : -1;
+        const directionY = Math.random() > 0.5 ? 1 : -1;
+
+        // Random speed for each dot
+        const speedX = Math.random() * dotSpeedRange + 0.5; // Random speed (1-2)
+        const speedY = Math.random() * dotSpeedRange + 0.5;
+
+        dot.style.left = `${initialX}px`;
+        dot.style.top = `${initialY}px`;
+
+        // Add an image to the dot
+        const image = document.createElement('img');
+        image.src = dotInfo[i].image; // Set the image URL for this dot
+        dot.appendChild(image);
+
+        // Set data attributes for the dot
+        dot.dataset.directionX = directionX;
+        dot.dataset.directionY = directionY;
+        dot.dataset.speedX = speedX;
+        dot.dataset.speedY = speedY;
+        dot.dataset.password = dotInfo[i].password; // Set the password for this dot
+        dot.dataset.link = dotInfo[i].link; // Set the link for this dot
+
+        // Set the dot as a link to a password-protected song
+        dot.onclick = function() {
+          openPasswordModal(i); // Pass the index of the dot
+        };
+
+        container.appendChild(dot);
+      }
+
+      // Animate dots
+      animateDots();
+    }
+
+    // Function to animate the dots
+    function animateDots() {
+      const dots = document.querySelectorAll('.dot');
+
+      function move() {
+        dots.forEach(dot => {
+          // Get dot properties from data attributes
+          const directionX = parseFloat(dot.dataset.directionX);
+          const directionY = parseFloat(dot.dataset.directionY);
+          const speedX = parseFloat(dot.dataset.speedX);
+          const speedY = parseFloat(dot.dataset.speedY);
+
+          // Calculate new positions
+          const newX = parseFloat(dot.style.left) + directionX * speedX;
+          const newY = parseFloat(dot.style.top) + directionY * speedY;
+
+          // Check for bouncing (hit screen borders)
+          if (newX <= 0 || newX >= window.innerWidth - 30) {
+            dot.dataset.directionX = -directionX; // Reverse X direction on hitting border
+          }
+
+          if (newY <= 0 || newY >= window.innerHeight - 30) {
+            dot.dataset.directionY = -directionY; // Reverse Y direction on hitting border
+          }
+
+          // Update position
+          dot.style.left = `${newX}px`;
+          dot.style.top = `${newY}px`;
+        });
+
+        // Repeat the animation
+        requestAnimationFrame(move);
+      }
+
+      // Start animation
+      move();
+    }
+
+    // Function to open the password modal
+    function openPasswordModal(dotIndex) {
+      const modal = document.getElementById('password-modal');
+      modal.style.display = 'flex';
+      modal.dataset.dotIndex = dotIndex; // Store which dot the modal is for
+    }
+
+    // Function to check the password
+    function checkPassword() {
+      const enteredPassword = document.getElementById('password-input').value;
+      const dotIndex = document.getElementById('password-modal').dataset.dotIndex;
+      const correctPassword = dotInfo[dotIndex].password;
+
+      if (enteredPassword === correctPassword) {
+        alert(`Access granted to the song! Link: ${dotInfo[dotIndex].link}`);
+        window.location.href = dotInfo[dotIndex].link; // Redirect to the link
+        closePasswordModal();
+      } else {
+        document.getElementById('error-message').style.display = 'block';
+      }
+    }
+
+    // Function to close the password modal
+    function closePasswordModal() {
+      const modal = document.getElementById('password-modal');
+      modal.style.display = 'none';
+      document.getElementById('password-input').value = ''; // Clear the input
+      document.getElementById('error-message').style.display = 'none'; // Hide the error message
+    }
+
+    // Initialize the grid with random dots
+    createRandomDots();
+  </script>
+
+</body>
+</html>
