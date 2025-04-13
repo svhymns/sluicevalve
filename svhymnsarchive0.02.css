@@ -74,6 +74,7 @@ body::before {
 .content h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    margin-top: 30px;
     background-color: rgba(0, 0, 255, 0.6); /* Semi-transparent blue background */
     color: white; /* Make the text white */
     padding: 10px; /* Add padding around the text */
