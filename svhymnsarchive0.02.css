@@ -123,8 +123,8 @@ body::before {
     }
   
     .scrolling-text-container {
-      font-size: 0.3rem; /* Reduce font size for scrolling text */
-      padding: 2px; /* Adjust padding */
+      font-size: 0.2rem; /* Reduce font size for scrolling text */
+      padding: 1px; /* Adjust padding */
     }
   
     .content {
