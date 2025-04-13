@@ -40,7 +40,7 @@ body::before {
 .scrolling-text {
     display: inline-block;
     animation: scroll 10s linear infinite;
-    padding: 10px;
+    padding: 6px;
     font-size: 1rem;
 }
 
@@ -123,7 +123,7 @@ body::before {
     }
   
     .scrolling-text-container {
-      font-size: 0.5rem; /* Reduce font size for scrolling text */
+      font-size: 0.3rem; /* Reduce font size for scrolling text */
       padding: 2px; /* Adjust padding */
     }
   
