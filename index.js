@@ -1,57 +1,57 @@
-const slideshow = document.querySelector('.slideshow');
+// Attach initMap to the global window object
+window.initMap = function () {
+  const dublin = { lat: 53.3498, lng: -6.2603 };
 
-  function stopAtNearestFace() {
-    const computedStyle = getComputedStyle(slideshow);
-    const matrix = computedStyle.transform;
-
-    if (matrix !== 'none') {
-      const values = matrix.split('(')[1].split(')')[0].split(',');
-      const a = parseFloat(values[0]);
-      const b = parseFloat(values[1]);
-      let angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
-
-      // Normalize angle to 0, 90, 180, or 270
-      angle = Math.round(angle / 90) * 90;
-
-      // Apply the nearest angle
-      slideshow.style.transform = `rotateY(${angle}deg)`;
-    }
-
-    // Stop the animation
-    slideshow.style.animation = 'none';
-  }
-
-  // Pause on hover and stop at the nearest face
-  slideshow.addEventListener('mouseover', stopAtNearestFace);
-
-  // Optional: Toggle animation on click
-  slideshow.addEventListener('click', () => {
-    const isRunning = getComputedStyle(slideshow).animation !== 'none';
-    slideshow.style.animation = isRunning ? 'none' : 'rotateSlideshow 10s infinite linear';
-  });
-let mapInitialized = false;
-
-function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 37.7749, lng: -122.4194 }, // Example coordinates
-    zoom: 10,
+    zoom: 12,
+    center: dublin,
   });
-}
 
-function reinitializeMap() {
-  if (!mapInitialized) {
-    initMap();
-    mapInitialized = true;
-  }
-}
+  // Marker 1: Rathmines
+  const rathmines = { lat: 53.3244, lng: -6.2659 };
+  const marker1 = new google.maps.Marker({
+    position: rathmines,
+    map: map,
+    title: "Rathmines",
+  });
 
-// Reinitialize the map when the slideshow rotates to the map container
-document.querySelector(".slideshow").addEventListener("animationiteration", () => {
-  const mapContainer = document.querySelector(".map-container");
-  const isVisible = mapContainer.getBoundingClientRect().width > 0;
+  const info1 = new google.maps.InfoWindow({
+    content: "<strong>Rathmines</strong><br>This map will be open to the public @ Wednesday next week.",
+  });
 
-  if (isVisible) {
-    reinitializeMap();
-  }
-});
+  marker1.addListener("click", () => {
+    info1.open(map, marker1);
+  });
 
+  // Marker 2: Howth Cliff Walk
+  const howthCliffWalk = { lat: 53.168368, lng: -6.078819 };
+  const marker2 = new google.maps.Marker({
+    position: howthCliffWalk,
+    map: map,
+    title: "Howth Cliff Walk",
+  });
+
+  const info2 = new google.maps.InfoWindow({
+    content: "<strong>Howth Cliff Walk</strong><br>Sluice valves are commonly used in water and sewer treatment systems, and they are known for their ability to shut off fluid flow entirely in emergencies.",
+  });
+
+  marker2.addListener("click", () => {
+    info2.open(map, marker2);
+  });
+
+  // Marker 3: Navan
+  const navan = { lat: 53.653096, lng: -6.684006 };
+  const marker3 = new google.maps.Marker({
+    position: navan,
+    map: map,
+    title: "Navan",
+  });
+
+  const info3 = new google.maps.InfoWindow({
+    content: "<strong>Navan</strong><br>I grew up here. I'm trying to reconnect with our land. I want you to find a location, a dream, a place, a memory, and mark it when that day comes.",
+  });
+
+  marker3.addListener("click", () => {
+    info3.open(map, marker3);
+  });
+};

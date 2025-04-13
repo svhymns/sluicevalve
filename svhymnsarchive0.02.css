@@ -21,7 +21,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('celine poster.png') no-repeat center center/cover; /* Fullscreen background image */
+    background: url('C:/Users/Samsung Galaxy/Documents/sluicevalve-main/images/celine poster.png') no-repeat center center/cover; /* Fullscreen background image */
     z-index: -1; /* Place it behind all content */
 }
 
@@ -117,47 +117,47 @@ body::before {
 }
 
 @media (max-width: 768px) {
-  body {
-    font-size: 50%; /* Scale down the base font size by 50% */
+    body {
+      font-size: 50%; /* Scale down the base font size by 50% */
+    }
+  
+    .scrolling-text-container {
+      font-size: 0.5rem; /* Reduce font size for scrolling text */
+      padding: 5px; /* Adjust padding */
+    }
+  
+    .content {
+      gap: 10px; /* Reduce spacing between items */
+      margin-top: 50px; /* Adjust top margin */
+    }
+  
+    .content h1 {
+      font-size: 1.25rem; /* Reduce heading size by 50% */
+      padding: 5px; /* Adjust padding */
+    }
+  
+    .content p {
+      font-size: 0.6rem; /* Reduce paragraph text size */
+      margin-bottom: 10px; /* Adjust bottom margin */
+    }
+  
+    .audio-entry {
+      max-width: 420px; /* Increase max width by 40% */
+      gap: 14px; /* Increase spacing between image and audio by 40% */
+    }
+  
+    .audio-entry img {
+      width: 70px; /* Increase image width by 40% */
+      height: 70px; /* Increase image height by 40% */
+    }
+  
+    .audio-entry audio {
+      width: 100%; /* Keep the width of the audio player */
+      height: 28px; /* Increase the height of the audio player by 40% */
+    }
+  
+    .audio-entry p {
+      font-size: 0.7rem; /* Increase text size for song titles by 40% */
+      margin-top: 3.5px; /* Adjust top margin */
+    }
   }
-
-  .scrolling-text-container {
-    font-size: 0.5rem; /* Reduce font size for scrolling text */
-    padding: 5px; /* Adjust padding */
-  }
-
-  .content {
-    gap: 10px; /* Reduce spacing between items */
-    margin-top: 50px; /* Adjust top margin */
-  }
-
-  .content h1 {
-    font-size: 1.25rem; /* Reduce heading size by 50% */
-    padding: 5px; /* Adjust padding */
-  }
-
-  .content p {
-    font-size: 0.6rem; /* Reduce paragraph text size */
-    margin-bottom: 10px; /* Adjust bottom margin */
-  }
-
-  .audio-entry {
-    max-width: 300px; /* Reduce max width by 50% */
-    gap: 10px; /* Reduce spacing between image and audio */
-  }
-
-  .audio-entry img {
-    width: 50px; /* Reduce image width by 50% */
-    height: 50px; /* Reduce image height by 50% */
-  }
-
-  .audio-entry audio {
-    width: 100%; /* Reduce the width of the audio player */
-    height: 20px; /* Set a smaller height for the audio player */
-  }
-
-  .audio-entry p {
-    font-size: 0.5rem; /* Reduce text size for song titles */
-    margin-top: 2.5px; /* Adjust top margin */
-  }
-}
