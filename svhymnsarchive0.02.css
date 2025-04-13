@@ -141,19 +141,25 @@ body::before {
       margin-bottom: 10px; /* Adjust bottom margin */
     }
   
-    .audio-entry {
-      max-width: 420px; /* Increase max width by 40% */
-      gap: 14px; /* Increase spacing between image and audio by 40% */
-    }
-  
-    .audio-entry img {
-      width: 70px; /* Increase image width by 40% */
-      height: 70px; /* Increase image height by 40% */
-    }
-  
-    .audio-entry audio {
-      width: 100%; /* Keep the width of the audio player */
-      height: 28px; /* Increase the height of the audio player by 40% */
+  .audio-entry {
+        max-width: 840px; /* Increase max width by 40% */
+        gap: 28px; /* Increase spacing between image and audio by 40% */
+      }
+    
+      .audio-entry img {
+        width: 140px; /* Increase image width by 40% */
+        height: 140px; /* Increase image height by 40% */
+      }
+    
+      .audio-entry audio {
+        width: 100%; /* Keep the width of the audio player */
+        height: 40px; /* Increase the height of the audio player by 40% */
+      }
+    
+      .audio-entry p {
+        font-size: 1.4rem; /* Increase text size for song titles by 40% */
+        margin-top: 7px; /* Adjust top margin */
+      }
     }
   
     .audio-entry p {
