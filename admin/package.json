@@ -1,0 +1,36 @@
+{
+    "name": "sluicevalve",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@supabase/auth-helpers-react": "^0.5.0",
+        "@supabase/ssr": "^0.6.1",
+        "@supabase/supabase-js": "^2.49.4",
+        "braces": "^3.0.3",
+        "concat-stream": "^2.0.0",
+        "cross-spawn": "^7.0.6",
+        "deep-extend": "^0.6.0",
+        "dot-prop": "^9.0.0",
+        "express": "^5.1.0",
+        "got": "^14.4.7",
+        "minimist": "^1.2.8",
+        "next": "^15.3.1",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "semver": "^7.7.1",
+        "uuid": "^11.1.0",
+        "yargs-parser": "^21.1.1"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.21",
+        "init": "^0.1.2",
+        "postcss": "^8.5.3",
+        "tailwindcss": "^4.1.4"
+    }
+}
