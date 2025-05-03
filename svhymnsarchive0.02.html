@@ -3,88 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="svhymnsarchive0.02.css">
+  <link rel="stylesheet" href="styles/svhymnsarchive0.02.css">
   <title>sluicevalvehymns /// archive 0.02</title>
 </head>
 <body>
   <!-- Scrolling Text Bar -->
   <div class="scrolling-text-container">
     <div class="scrolling-text">
-     ive been trying to listen to a bit of enya and sinead o connor...  +these are like a few songs, there will be more, weekly, daily im not sure. theres a fox outside my window that bellows. anyways enjoy:/
+      UPDATEseries 0.02: the map marks points of space, space holds time. time holds _____ ///// all of my recently deleted/archived artwork can be found within the [nothing] button, which contains the archive dots. keys to these dots exist simple words most likely+ clues can be found embedded in the image below the map. ROADHOG XO
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- Header Section -->
   <div class="overlay">
-    <div class="content">
+    <div class="header">
       <h1>sluicevalvehymns /// archive 0.02</h1>
-      <p>if ur reading this its 2 late :-* r sum</p>
-
-      <!-- Audio Entry 1 -->
-      <div class="audio-entry">
-        <img src="POSTER 6.png" alt="Image for Audio 1">
-        <div>
-          <audio controls>
-            <source src="MAAAANNEQIN.mp3" type="audio/mpeg">
-            <source src="" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-          <p>#LOCALLYHATED</p>
-        </div>
-      </div>
-
-      <!-- Audio Entry 2 -->
-      <div class="audio-entry">
-        <img src="efb1f072-eb36-461b-bd22-84823c54c13e.400x400.jpg" alt="Image for Audio 2">
-        <div>
-          <audio controls>
-            <source src="dichotomies.mp3" type="audio/mpeg">
-            <source src="" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-          <p>dichotomies</p>
-        </div>
-      </div>
-
-            <!-- Audio Entry 3 -->
-            <div class="audio-entry">
-              <img src="Screenshot 2025-04-12 232555.png" alt="Image for Audio 3">
-              <div>
-                <audio controls>
-                  <source src="d rose vox.mp3" type="audio/mpeg">
-                  <source src="" type="audio/wav">
-                  Your browser does not support the audio element.
-                </audio>
-                <p>d rose (p. 13 + sv)</p>
-              </div>
-            </div>
-
-                  <!-- Audio Entry 3 -->
-      <div class="audio-entry">
-        <img src="check urself cover.jpg" alt="Image for Audio 3">
-        <div>
-          <audio controls>
-            <source src="check_urself.mp3" type="audio/mpeg">
-            <source src="" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
-          <p>check_URSELF</p>
-        </div>
-      </div>
-
-            <!-- Audio Entry 10 -->
-            <div class="audio-entry">
-              <img src="Screenshot 2025-04-13 000955.png" alt="Image for Audio 10">
-              <div>
-                <audio controls>
-                  <source src="tethered.mp3" type="audio/mpeg">
-                  <source src="" type="audio/wav">
-                  Your browser does not support the audio element.
-                </audio>
-                <p>imposterSYNDROME</p>
-              </div>
-            </div>
     </div>
   </div>
+
+  <!-- View Toggle Buttons -->
+  <div class="view-toggle">
+    <button id="list-view-btn">List View</button>
+    <button id="grid-view-btn">Grid View</button>
+    <!-- Slider is not used, can be removed if not needed -->
+    <input type="range" id="grid-size-slider" min="1" max="5" value="3" style="display: none;">
+  </div>                  
+
+  <!-- Songs Content -->
+  <div class="content">
+    <!-- Fetched songs will be appended here -->
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://htdzsvfigabgcjcteruz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0ZHpzdmZpZ2FiZ2NqY3RlcnV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3MDA0MjEsImV4cCI6MjA2MTI3NjQyMX0.TYEquQ5nJXnzwthh2VQTKeOhSqbcUHDUd7puqHlSHgw';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const contentDiv = document.querySelector('.content');
+      const listViewBtn = document.getElementById('list-view-btn');
+      const gridViewBtn = document.getElementById('grid-view-btn');
+
+      let currentMode = 'list'; // Default mode
+      let currentPage = 1;
+      const pageSize = 20;
+
+      // Toggle to List View
+      listViewBtn.addEventListener('click', () => {
+        currentMode = 'list';
+        contentDiv.classList.remove('grid');
+        currentPage = 1;
+        fetchSongs(currentPage);
+      });
+
+      // Toggle to Grid View
+      gridViewBtn.addEventListener('click', () => {
+        currentMode = 'grid';
+        contentDiv.classList.add('grid');
+        currentPage = 1;
+        fetchSongs(currentPage);
+      });
+
+      async function fetchSongs(page = 1) {
+        const from = (page - 1) * pageSize;
+        const to = from + pageSize - 1;
+
+        const { data: songs, error } = await supabase
+          .from('songs')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .range(from, to);
+
+        if (error) {
+          console.error('Error fetching songs:', error);
+          return;
+        }
+
+        
+        // ...inside your fetchSongs function...
+const fallbackCover = 'images/Pure_blue.webp'; // Change to your fallback image filename
+
+
+        const SUPABASE_STORAGE_URL = 'https://htdzsvfigabgcjcteruz.supabase.co/storage/v1/object/public/songs/';
+        if (page === 1) contentDiv.innerHTML = '';
+
+               songs.forEach((song) => {
+          const songElement = document.createElement('div');
+          songElement.classList.add('audio-entry');
+        
+          // Use fallback cover if needed
+          const cover = song.cover_url ? song.cover_url : fallbackCover;
+        
+          // ...inside your fetchSongs function...
+if (currentMode === 'grid') {
+  songElement.innerHTML = `
+    <div class="audio-entry-row grid-row">
+      <div class="cover-container">
+        <img src="${SUPABASE_STORAGE_URL}${cover}" alt="Cover for ${song.title}" loading="lazy">
+        <div class="song-title-overlay">${song.title}</div>
+      </div>
+      <audio controls>
+        <source src="${SUPABASE_STORAGE_URL}${song.audio_url}" type="audio/mpeg">
+        <source src="${SUPABASE_STORAGE_URL}${song.audio_url}" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  `;
+} else {
+  songElement.innerHTML = `
+    <div class="audio-entry-row list-row">
+      <div class="cover-container list-cover">
+        <img src="${SUPABASE_STORAGE_URL}${cover}" alt="Cover for ${song.title}" loading="lazy">
+      </div>
+      <div class="list-audio">
+        <audio controls>
+          <source src="${SUPABASE_STORAGE_URL}${song.audio_url}" type="audio/mpeg">
+          <source src="${SUPABASE_STORAGE_URL}${song.audio_url}" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <div class="list-title">${song.title}</div>
+  `;
+}
+        
+songElement.addEventListener('click', (e) => {
+  if (
+    e.target.tagName.toLowerCase() === 'audio' ||
+    e.target.tagName.toLowerCase() === 'source' ||
+    e.target.tagName.toLowerCase() === 'button'
+  ) {
+    return;
+  }
+  const thisAudio = songElement.querySelector('audio');
+  // Pause all other audio elements
+  document.querySelectorAll('.audio-entry audio').forEach(audio => {
+    if (audio !== thisAudio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
+  if (thisAudio) {
+    thisAudio.play();
+  }
+});
+        
+          contentDiv.appendChild(songElement);
+        });
+
+        // Add or update "Load More" button
+        let loadMoreBtn = document.getElementById('load-more-btn');
+        if (!loadMoreBtn) {
+          loadMoreBtn = document.createElement('button');
+          loadMoreBtn.id = 'load-more-btn';
+          loadMoreBtn.textContent = 'Load More';
+          loadMoreBtn.style.display = 'block';
+          loadMoreBtn.addEventListener('click', () => {
+            currentPage++;
+            fetchSongs(currentPage);
+          });
+          contentDiv.appendChild(loadMoreBtn);
+        }
+        // Hide button if less than pageSize songs loaded
+        if (songs.length < pageSize && loadMoreBtn) {
+          loadMoreBtn.style.display = 'none';
+        } else if (loadMoreBtn) {
+          loadMoreBtn.style.display = 'block';
+        }
+      }
+
+      // Fetch songs on page load
+      fetchSongs(currentPage);
+    });
+  </script>
 </body>
 </html>

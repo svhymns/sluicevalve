@@ -55,3 +55,4 @@ window.initMap = function () {
     info3.open(map, marker3);
   });
 };
+
