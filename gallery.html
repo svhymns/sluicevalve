@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SV Gallery ©</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#ffffff; color:#fff; }
+    .scrolling-bar {
+      background:yellow; color:rgb(0, 0, 0); height:25px; display:flex; align-items:center;
+      overflow:hidden; position:fixed; top:0; left:0; width:100vw; z-index:1000;
+    }
+    .scrolling-text {
+      white-space:nowrap; display:inline-block; animation:scroll-left 15s linear infinite;
+      font-size:16px; padding-left:100vw;
+    }
+    @keyframes scroll-left {
+      0% { transform:translateX(0); }
+      100% { transform:translateX(-100%); }
+    }
+    .gallery {
+  margin-top:35px;
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap:2px;
+  row-gap:16px; /* Add this line for row spacing */
+  padding:2px;
+  justify-items:center;
+  align-items:start;
+}
+    .artwork {
+      background:#222;
+      border-radius:0;
+      overflow:hidden;
+      width:120px;
+      cursor:pointer;
+      position:relative;
+      transition:box-shadow 0.2s, background 0.2s;
+      box-shadow:0 1px 4px rgba(0,0,0,0.18);
+      min-height:140px;
+    }
+    .artwork:hover { background:yellow; box-shadow:0 2px 8px rgba(0,0,0,0.22);}
+    .artwork img {
+      width:100%;
+      display:block;
+      height:100px;
+      object-fit:cover;
+      border-radius:0;
+    }
+    .artwork-info {
+  padding:6px;
+  color:#fff;
+  background:transparent; /* Remove the black bar */
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  opacity:0;
+  transition:opacity 0.2s;
+  pointer-events:none;
+  font-size:0.95em;
+}
+    .artwork:hover .artwork-info {
+      opacity:1;
+      color:#111;
+      background:rgba(255,255,0,0.85);
+    }
+    .slideshow-modal {
+      display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh;
+      background:rgba(0,0,0,0.96); align-items:center; justify-content:center; flex-direction:column;
+    }
+    .slideshow-modal.active { display:flex; }
+    .slideshow-img {
+      max-width:90vw; max-height:50vh; border-radius:0; box-shadow:0 2px 16px #000; margin-bottom:24px; background:#222;
+    }
+    .slideshow-details {
+      color:#fff; background:rgba(0,0,0,0.7); padding:16px 24px; border-radius:0; text-align:center;
+      font-family:Arial,sans-serif; margin-bottom:16px;
+    }
+    .slideshow-details .title { font-size:1.3em; font-weight:bold; margin-bottom:8px; }
+    .slideshow-details .desc { font-size:1em; margin-bottom:8px; }
+    .slideshow-details .price { font-size:1.1em; color:yellow; font-weight:bold; }
+    .slideshow-controls { display:flex; gap:24px; margin-bottom:16px; }
+    .slideshow-controls button {
+      background:yellow; color:#111; border:none; border-radius:0; padding:8px 18px; font-size:1em;
+      cursor:pointer; font-family:Arial,sans-serif; font-weight:bold; transition:background 0.2s;
+    }
+    .slideshow-controls button:hover { background:#fff700; }
+    .close-btn {
+      position:absolute; top:24px; right:32px; background:#111; color:yellow; border:none; font-size:2em;
+      cursor:pointer; border-radius:0; width:40px; height:40px; line-height:36px; text-align:center; z-index:2100;
+      transition:background 0.2s;
+    }
+    .close-btn:hover { background:#333; }
+    .contact-message {
+      margin:48px auto 24px auto; max-width:600px; background:#222; color:#fff; padding:24px; border-radius:0;
+      text-align:center; font-size:1.1em; font-family:Arial,sans-serif; box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    }
+    @media (max-width:900px) {
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .artwork { width:98vw; min-height:90px;}
+      .artwork img { height:70px; }
+      .slideshow-img { max-width:98vw; max-height:40vh; }
+      .slideshow-details { padding:10px 6px; }
+    }
+
+    @media (max-width: 700px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    row-gap: 12px;
+    padding: 2px;
+  }
+  .artwork {
+    width: 60px;
+    min-height: 70px;
+  }
+  .artwork img {
+    height: 40px;
+  }
+  .slideshow-img {
+    max-width: 98vw;
+    max-height: 40vh;
+  }
+  .slideshow-details {
+    padding: 10px 6px;
+    font-size: 0.95em;
+  }
+  .close-btn {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5em;
+    line-height: 32px;
+  }
+  .slideshow-controls button {
+    padding: 6px 12px;
+    font-size: 0.95em;
+  }
+  .scrolling-bar {
+    font-size: 14px;
+    height: 22px;
+  }
+  #email-footer, .contact-message, p[style*="email @"] {
+    font-size: 0.85em !important;
+    margin: 20px 0 10px 0 !important;
+  }
+}
+
+    
+  </style>
+</head>
+<body>
+  <div class="scrolling-bar">
+    <div class="scrolling-text">
+      231 187 88 696969 22qckqck* 11whistle* +1 333 55 (dd) 2 
+    </div>
+  </div>
+  <div class="gallery" id="gallery"></div>
+  <!-- Add your image here, below the gallery -->
+  <div style="width:100%;text-align:center;margin:32px 0 8px 0;">
+    <img src="./Artwork/sv.png" alt="Footer Image" style="max-width:180px;width:100%;height:auto;">
+  </div>
+  <div class="slideshow-modal" id="slideshowModal">
+    <button class="close-btn" id="closeSlideshow">&times;</button>
+    <img class="slideshow-img" id="slideshowImg" src="" alt="">
+    <div class="slideshow-details" id="slideshowDetails"></div>
+    <div class="slideshow-controls">
+      <button id="prevBtn">&#8592; Prev</button>
+      <button id="nextBtn">Next &#8594;</button>
+    </div>
+
+  <script>
+    // Artwork data
+    const artworks = [
+      {
+        title: "untitled",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_112256.jpg"
+      },
+      {
+        title: "untitled",
+        desc: "Mix Media",
+        price: "$1300",
+        img: "./Artwork/20250506_112320.jpg",
+        paymentLink: "https://buy.stripe.com/5kQfZgdvH71t9Zx3Kidby06"
+      },
+      {
+        title: "untitled",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_112455.jpg"
+      },
+      {
+        title: "untitled",
+        desc: "sculpture",
+        price: "/Ii|/|",
+        img: "./Artwork/20250506_112534.jpg"
+      },
+      {
+        title: "untitled",
+        desc: "o00o00Ooo0",
+        price: "sold",
+        img: "./Artwork/20250506_112234.jpg"
+      },
+      {
+        title: "census",
+        desc: "Mix Media",
+        price: "$700",
+        img: "./Artwork/20250506_112209.jpg",
+        paymentLink: "https://buy.stripe.com/28EeVc2R3dpRdbJ4Omdby05"
+      },
+      {
+        title: "madra slithe (tryptch)",
+        desc: "Mix Media",
+        price: "$2170",
+        img: "./Artwork/20250506_112134.jpg",
+        paymentLink: "https://buy.stripe.com/28E28q9fr71tc7F94Cdby04"
+      },
+      {
+        title: "palette",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_112100.jpg",
+      },
+      {
+        title: "untitled",
+        desc: "Mix Media",
+        price: "$500",
+        img: "./Artwork/20250506_112026.jpg",
+        paymentLink: "https://buy.stripe.com/6oU3cufDPfxZ0oX1Cadby02"
+      },
+      {
+        title: "en-",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_111843.jpg"
+      },
+      {
+        title: "how to drive",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_111907(0).jpg"
+      },
+      {
+        title: "tag",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_111928.jpg"
+      },
+      {
+        title: "untitled",
+        desc: "Mix Media",
+        price: "sold",
+        img: "./Artwork/20250506_111943.jpg"
+      },
+      {
+        title: "runway database",
+        desc: "Mix Media",
+        price: "$900",
+        img: "./Artwork/20250506_112003.jpg",
+        paymentLink: "https://buy.stripe.com/8x228q77jfxZdbJ4Omdby01"
+      },
+    ];
+    // Slideshow logic
+    let currentIdx = 0;
+    const modal = document.getElementById('slideshowModal');
+    const img = document.getElementById('slideshowImg');
+    const details = document.getElementById('slideshowDetails');
+
+    function showSlide(idx) {
+      currentIdx = (idx + artworks.length) % artworks.length;
+      const art = artworks[currentIdx];
+      img.src = art.img;
+      img.alt = art.title;
+      details.innerHTML = `
+  <div class="title">${art.title}</div>
+  <div class="desc">${art.desc}</div>
+  <div class="price">${art.price}</div>
+  ${art.paymentLink ? `<a href="${art.paymentLink}" target="_blank" style="display:inline-block;margin-top:8px;padding:4px 12px;background:blue;color:#fff;border:none;border-radius:3px;margin-top:30px;text-decoration:none;font-size:0.9em;">Buy</a>` : ""}
+`;
+    }
+
+    function openSlideshow(idx) {
+      modal.classList.add('active');
+      showSlide(idx);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSlideshow() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Render gallery
+    const gallery = document.getElementById('gallery');
+    artworks.forEach((art, idx) => {
+      const container = document.createElement('div');
+      container.className = 'artwork';
+      container.innerHTML = `
+  <img src="${art.img}" alt="${art.title}">
+  <div class="artwork-info">
+    <div><strong>${art.title}</strong></div>
+    <div>${art.price}</div>
+  </div>
+`;
+      container.addEventListener('click', () => openSlideshow(idx));
+      gallery.appendChild(container);
+    });
+
+    document.getElementById('closeSlideshow').onclick = closeSlideshow;
+    document.getElementById('prevBtn').onclick = () => showSlide(currentIdx - 1);
+    document.getElementById('nextBtn').onclick = () => showSlide(currentIdx + 1);
+    window.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeSlideshow();
+      if (e.key === 'ArrowLeft') showSlide(currentIdx - 1);
+      if (e.key === 'ArrowRight') showSlide(currentIdx + 1);
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeSlideshow();
+    });
+  </script>
+</body>
+</html>
